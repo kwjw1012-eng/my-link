@@ -1,7 +1,6 @@
 import { ImageResponse } from "next/og";
 import { notFound } from "next/navigation";
-import { cloudEnabled, findProfile, readLinks } from "@/lib/firebase";
-import { sampleLinks, sampleProfile, validUsername } from "@/lib/profile";
+import { getPublicProfile } from "./profile-data";
 
 export const alt = "MyLink profile preview";
 export const size = { width: 1200, height: 630 };
@@ -9,9 +8,9 @@ export const contentType = "image/png";
 
 export default async function OpenGraphImage({ params }: { params: Promise<{ username: string }> }) {
   const { username } = await params;
-  const profile = username === "demo" ? sampleProfile : cloudEnabled && validUsername(username) ? await findProfile(username) : null;
-  if (!profile) notFound();
-  const links = profile.uid === "demo" ? sampleLinks : await readLinks(profile.uid);
+  const data = await getPublicProfile(username);
+  if (!data) notFound();
+  const { profile, links } = data;
   const font = /[^\u0000-\u007f]/.test(profile.name + profile.bio)
     ? await fetch("https://raw.githubusercontent.com/notofonts/noto-cjk/main/Sans/SubsetOTF/KR/NotoSansKR-Regular.otf", { signal: AbortSignal.timeout(2500), next: { revalidate: 86400 } })
       .then(response => response.ok ? response.arrayBuffer() : null).catch(() => null)
