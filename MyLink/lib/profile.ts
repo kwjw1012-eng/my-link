@@ -13,6 +13,18 @@ export const sampleLinks: ProfileLink[] = [
   { id: "source", title: "마이링크 소스 코드", url: "https://github.com/kwjw1012-eng/my-link", clickCount: 0 },
 ];
 
+export const courseProfile: Profile = {
+  uid: "course-profile",
+  username: "kwjw1012-eng",
+  name: "KWJW",
+  bio: "바이브 코딩 수업에서 만든 마이링크입니다.",
+};
+
+export const courseLinks: ProfileLink[] = [
+  ...sampleLinks,
+  { id: "home", title: "마이링크 소개", url: "/", clickCount: 0 },
+];
+
 export const validUsername = (value: string) => /^[a-z0-9][a-z0-9-]{2,23}$/.test(value)
   && !["api", "demo", "login", "mypage"].includes(value);
 
