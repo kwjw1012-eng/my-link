@@ -8,13 +8,22 @@ export const sampleProfile: Profile = {
   bio: "바이브 코딩으로 만든 프로젝트와 소스 코드를 모아 두는 공간입니다.",
 };
 
-export const sampleLinks: ProfileLink[] = [
+export const courseLinks: ProfileLink[] = [
   { id: "github", title: "GitHub 프로필", url: "https://github.com/kwjw1012-eng", clickCount: 0 },
   { id: "source", title: "마이링크 소스 코드", url: "https://github.com/kwjw1012-eng/my-link", clickCount: 0 },
 ];
 
+export const courseProfile: Profile = {
+  uid: "course-profile",
+  username: "kwjw1012-eng",
+  name: "KWJW",
+  bio: "바이브 코딩으로 만든 작업과 코드를 모아두었어요.",
+};
+
+export const courseProfilePath = `/${courseProfile.username}`;
+
 export const validUsername = (value: string) => /^[a-z0-9][a-z0-9-]{2,23}$/.test(value)
-  && !["api", "demo", "login", "mypage"].includes(value);
+  && !["api", "demo", "login", "mypage", courseProfile.username].includes(value);
 
 export function webUrl(value: string) {
   const url = new URL(value);
