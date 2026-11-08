@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { cloudEnabled } from "@/lib/firebase";
 import { readDemo, writeDemo } from "@/lib/demo";
@@ -47,7 +48,19 @@ export default function ProfileCard({ profile, initialLinks, trackClicks }: { pr
   return <main className="profile-screen">
     <div className="public-profile">
       <header>
-        <div className="profile-avatar" aria-hidden="true">{Array.from(profile.name).slice(0, isCourseProfile ? 2 : 1).join("")}</div>
+        <div className="profile-avatar">
+          {isCourseProfile ? (
+            <Image
+              className="profile-avatar-image"
+              src="/shih-tzu.webp"
+              alt="고개를 살짝 기울인 시츄 강아지"
+              width={360}
+              height={360}
+              loading="eager"
+              unoptimized
+            />
+          ) : <span aria-hidden="true">{Array.from(profile.name)[0]}</span>}
+        </div>
         <h1>{profile.name}</h1>
         <p className="profile-handle">@{profile.username}</p>
         {profile.bio && <p className="profile-bio">{profile.bio}</p>}
