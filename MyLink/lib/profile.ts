@@ -16,7 +16,7 @@ export const courseLinks: ProfileLink[] = [
 export const courseProfile: Profile = {
   uid: "course-profile",
   username: "kwjw1012-eng",
-  name: "KWJW",
+  name: "바이브 코딩",
   bio: "바이브 코딩으로 만든 작업과 코드를 모아두었어요.",
 };
 
