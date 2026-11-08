@@ -1,18 +1,17 @@
 import { cache } from "react";
 import { cloudEnabled, findProfile, readLinks } from "@/lib/firebase";
-import { courseLinks, courseProfile, sampleLinks, sampleProfile, validUsername } from "@/lib/profile";
+import { courseLinks, courseProfile, sampleProfile, validUsername } from "@/lib/profile";
 
 export const getPublicProfile = cache(async (username: string) => {
+  if (username === courseProfile.username) {
+    return { profile: courseProfile, links: courseLinks, trackClicks: false };
+  }
   if (username === sampleProfile.username) {
-    return { profile: sampleProfile, links: sampleLinks, trackClicks: false };
+    return { profile: sampleProfile, links: courseLinks, trackClicks: false };
   }
-  if (!validUsername(username)) return null;
+  if (!cloudEnabled || !validUsername(username)) return null;
 
-  const profile = cloudEnabled ? await findProfile(username) : null;
-  if (profile) {
-    return { profile, links: await readLinks(profile.uid), trackClicks: true };
-  }
-  return username === courseProfile.username
-    ? { profile: courseProfile, links: courseLinks, trackClicks: false }
-    : null;
+  const profile = await findProfile(username);
+  if (!profile) return null;
+  return { profile, links: await readLinks(profile.uid), trackClicks: true };
 });
