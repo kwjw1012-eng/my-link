@@ -17,7 +17,7 @@ export const courseProfile: Profile = {
   uid: "course-profile",
   username: "kwjw1012-eng",
   name: "윤중석",
-  bio: "바이코딩 견습생",
+  bio: "바이브 코딩 견습생",
 };
 
 export const courseProfilePath = `/${courseProfile.username}`;
